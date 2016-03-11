@@ -12,9 +12,9 @@ app.use(express.static(__dirname + '/public'))
 /*serves main page*/
 app.get('/', function(request, response) {
 // response.sendfile('index.html')
-    fs.readFile('index.html', function(err, data){
-        response.send(data.toString());
-    }); 
+    var data = fs.readFileSync('index.html')
+    response.send(data.toString())
+
 })
 
 app.listen(app.get('port'), function() {
