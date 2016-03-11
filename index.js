@@ -2,17 +2,8 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 
-// Asynchronous read
-// fs.readFile('index.html', function (err, data) {
-//    if (err) {
-//        return console.error(err);
-//    }
-//    console.log("Asynchronous read: " + data.toString());
-// });
-
-// Synchronous read
 // var data = fs.readFileSync('index.html');
-// console.log("Synchronous read: " + data.toString());
+
 
 /* serves all the static files*/
 app.set('port', (process.env.PORT || 5000))
