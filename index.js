@@ -8,10 +8,11 @@ var port = process.env.PORT || 8080;
 var r_l = function(request, response) {
 
     fs.open('index.html', 'r', function(err, fd) {
-        var data = fs.readFileSync('index.html');
+        fs.readFile('index.html', function(err, data){
         response.writeHead(200, {'Content-Type': 'text/html'});
         response.write(data.toString());
         response.end();
+        }); 
     });
 }
 
