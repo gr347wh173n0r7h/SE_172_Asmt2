@@ -1,38 +1,20 @@
-var express = require('express');
-var app = express();
+var http = require("http");
 var fs = require("fs");
+var port = process.env.PORT || 8080;
 
 // var data = fs.readFileSync('index.html');
 
-
-/* serves all the static files*/
-app.set('port', (process.env.PORT || 5000))
-app.use(express.static(__dirname + '/public'))
-
 /*serves main page*/
-app.get('/', function(request, response) {
+var r_l = function(request, response) {
 
-	fs.open('index.html', 'r', function(err, fd) {
-    fs.fstat(fd, function(err, stats) {
-        var bufferSize=stats.size,
-            chunkSize=512,
-            buffer=new Buffer(bufferSize),
-            bytesRead = 0;
-
-        while (bytesRead < bufferSize) {
-            if ((bytesRead + chunkSize) > bufferSize) {
-                chunkSize = (bufferSize - bytesRead);
-            }
-            fs.read(fd, buffer, bytesRead, chunkSize, bytesRead);
-            bytesRead += chunkSize;
-        }
-        response.send(buffer.toString('utf8', 0, bufferSize));
-        fs.close(fd);
+    fs.open('index.html', 'r', function(err, fd) {
+        var data = fs.readFileSync('index.html');
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(data.toString());
+        response.end();
     });
-});
+}
 
-});
 
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'))
-})
+var server = http.createServer(r_l);
+server.listen(port); 
